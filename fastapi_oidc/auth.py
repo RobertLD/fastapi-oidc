@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module for validating OIDC ID Tokens. Configured via config.py 
+Module for validating OIDC ID Tokens. Configured via config.py
 
 Usage
 =====
@@ -15,6 +15,8 @@ Usage
         name = authenticated_user.preferred_username
         return f"Hello {name}"
 """
+
+import logging
 
 from typing import Callable
 from typing import Optional
@@ -41,6 +43,7 @@ def get_auth(
     issuer: str,
     signature_cache_ttl: int,
     token_type: Type[IDToken] = IDToken,
+    ssl_verify: bool = True,
 ) -> Callable[[str], IDToken]:
     """Take configurations and return the authenticate_user function.
 
@@ -78,10 +81,11 @@ def get_auth(
         openIdConnectUrl=f"{base_authorization_server_uri}/.well-known/openid-configuration"
     )
 
-    discover = discovery.configure(cache_ttl=signature_cache_ttl)
+    discover = discovery.configure(cache_ttl=signature_cache_ttl, ssl_verify=ssl_verify)
 
     def authenticate_user(auth_header: str = Depends(oauth2_scheme)) -> IDToken:
-        """Validate and parse OIDC ID token against issuer in config.
+        """
+        Validate and parse OIDC ID token against issuer in config.
         Note this function caches the signatures and algorithms of the issuing server
         for signature_cache_ttl seconds.
 
@@ -107,7 +111,6 @@ def get_auth(
                 algorithms,
                 audience=audience if audience else client_id,
                 issuer=issuer,
-                # Disabled at_hash check since we aren't using the access token
                 options={"verify_at_hash": False},
             )
             return token_type.parse_obj(token)

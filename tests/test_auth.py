@@ -12,7 +12,6 @@ def test__authenticate_user(
     config_w_aud,
     test_email,
 ):
-
     monkeypatch.setattr(auth.discovery, "configure", mock_discovery)
 
     token = token_with_audience
@@ -32,7 +31,6 @@ def test__authenticate_user_no_aud(
     no_audience_config,
     test_email,
 ):
-
     monkeypatch.setattr(auth.discovery, "configure", mock_discovery)
 
     token = token_without_audience

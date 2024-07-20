@@ -40,7 +40,25 @@ class IDToken(BaseModel):
 
 
 class OktaIDToken(IDToken):
-    """Pydantic Model for the IDToken returned by Okta's OIDC implementation."""
+    """
+    Pydantic Model for the IDToken returned by Okta's OIDC implementation.
+
+    This class represents the structure of an ID token issued by Okta's OpenID Connect
+    (OIDC) implementation. The ID token contains various claims about the authentication
+    of an end-user.
+
+    Attributes:
+        auth_time (int): The time when the authentication occurred, represented as a Unix timestamp.
+        ver (int): The version of the ID token.
+        jti (str): The unique identifier for the ID token.
+        amr (List[str]): The Authentication Methods Reference, indicating the methods used for authentication.
+        idp (str): The identifier for the identity provider.
+        nonce (str): A string value used to associate a client session with an ID token to mitigate replay attacks.
+        at_hash (str): The hash value of the access token. Used to validate the access token.
+        name (str): The full name of the end-user.
+        email (str): The email address of the end-user.
+        preferred_username (str): The preferred username of the end-user.
+    """
 
     auth_time: int
     ver: int
