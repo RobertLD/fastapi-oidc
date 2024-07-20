@@ -9,6 +9,7 @@ class TokenSpecificationError(BaseException):
     Attributes:
         message (str): Optional. A human-readable message describing the error.
     """
+
     def __init__(self, message: str = "There was an error in the token specification"):
         """
         Initialize a TokenSpecificationError instance.

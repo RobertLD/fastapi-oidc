@@ -57,7 +57,7 @@ def configure(*_, cache_ttl: int):
         return algos
 
     @cached(TTLCache(1, cache_ttl))
-    def discover_auth_server(*_, base_url: str,  ssl_verify: bool = True) -> Dict:
+    def discover_auth_server(*_, base_url: str, ssl_verify: bool = True) -> Dict:
         """
         Discover the OpenID Connect configuration from the authentication server.
 
@@ -90,6 +90,7 @@ def configure(*_, cache_ttl: int):
             public_keys (function): The function to retrieve the authentication server's public keys.
             signing_algos (function): The function to retrieve supported signing algorithms.
         """
+
         auth_server = discover_auth_server
         public_keys = get_authentication_server_public_keys
         signing_algos = get_signing_algos

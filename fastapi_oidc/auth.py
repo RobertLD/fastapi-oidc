@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module for validating OIDC ID Tokens. Configured via config.py 
+Module for validating OIDC ID Tokens. Configured via config.py
 
 Usage
 =====
@@ -15,6 +15,7 @@ Usage
         name = authenticated_user.preferred_username
         return f"Hello {name}"
 """
+
 import logging
 
 from typing import Callable
@@ -42,7 +43,7 @@ def get_auth(
     issuer: str,
     signature_cache_ttl: int,
     token_type: Type[IDToken] = IDToken,
-    ssl_verify: bool = True
+    ssl_verify: bool = True,
 ) -> Callable[[str], IDToken]:
     """Take configurations and return the authenticate_user function.
 
